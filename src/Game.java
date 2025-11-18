@@ -9,7 +9,6 @@ public class Game implements Serializable{
     Player player2;
     Board board;
     transient Scanner scanner = new Scanner(System.in);
-        // Arquivo obsoleto. Use Game.java
     Game(String player1Name, String player2Name) {
         player1 = new Player(player1Name);
         player2 = new Player(player2Name);
@@ -21,18 +20,15 @@ public class Game implements Serializable{
         player2.setHealth(health);
     }
 
-    // Getters
     public Player getPlayer1() { return player1; }
     public Player getPlayer2() { return player2; }
     public Board getBoard() { return board; }
     
-    // Setters
     public void setPlayer1(Player p1) { this.player1 = p1; }
     public void setPlayer2(Player p2) { this.player2 = p2; }
     public void setGameLoaded(boolean loaded) { this.gameLoaded = loaded; }
     public boolean isGameLoaded() { return gameLoaded; }
     public void play() {
-        // Reinitialize Scanner after deserialization
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
@@ -81,11 +77,9 @@ public class Game implements Serializable{
                     System.exit(0);
                 }
 
-                // Validate row and column (must be numbers)
                 int row = Integer.parseInt(rowToken);
                 int col = Integer.parseInt(colToken);
                 
-                // Validate direction (must be a single letter: w, a, s, d)
                 if (dirToken.length() != 1 || !dirToken.matches("[wasdWASD]")) {
                     System.out.println("✘ Invalid direction! Use w, a, s or d.");
                     continue;
@@ -109,7 +103,6 @@ public class Game implements Serializable{
             }
         }
 
-        // At the end of the turn, show the current score of both players
         System.out.println("--- Score after the turn ---");
         System.out.println(currentPlayer.getName() + " - Points: " + currentPlayer.getPoints());
         System.out.println(opponentPlayer.getName() + " - Points: " + opponentPlayer.getPoints());

@@ -4,15 +4,12 @@ public class GameData {
 
     public static void saveGame(String filePath, Game game) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // Save player 1 data
             writer.write(game.getPlayer1().exportData());
             writer.newLine();
             
-            // Save player 2 data
             writer.write(game.getPlayer2().exportData());
             writer.newLine();
             
-            // Save board state
             writer.write(game.getBoard().exportBoard());
             writer.newLine();
             

@@ -50,12 +50,10 @@ public class Player implements Serializable {
                 "Points: " + points + "\n";
     }
 
-    // Export player data as string (CSV-like)
     public String exportData() {
         return name + "," + health + "," + gold + "," + experience + "," + points;
     }
 
-    // Create a player from a string
     public static Player fromString(String data) {
         try {
             String[] parts = data.split(",");

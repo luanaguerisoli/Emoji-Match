@@ -24,7 +24,6 @@ public class Board {
 
     }
     public boolean noThreeInARow() {
-        // Detect horizontal trios
         for (int r = 0; r < size; r++) {
             for (int c = 0; c <= size - 3; c++) {
                 if (board[r][c] == board[r][c + 1] && board[r][c] == board[r][c + 2]) {
@@ -32,7 +31,6 @@ public class Board {
                 }
             }
         }
-        // Detect vertical trios
         for (int r = 0; r <= size - 3; r++) {
             for (int c = 0; c < size; c++) {
                 if (board[r][c] == board[r + 1][c] && board[r][c] == board[r + 2][c]) {
@@ -91,7 +89,6 @@ public class Board {
             foundCombo = false;
             boolean[][] remove = new boolean[size][size];
 
-            // Detect horizontal trios
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c <= size - 3; c++) {
                     char s = board[r][c];
@@ -104,7 +101,6 @@ public class Board {
                 }
             }
 
-            // Detect vertical trios
             for (int r = 0; r <= size - 3; r++) {
                 for (int c = 0; c < size; c++) {
                     char s = board[r][c];
@@ -119,7 +115,6 @@ public class Board {
 
             if (!foundCombo) break;
 
-            // Count how many times each removed symbol appears (to apply effect only once)
             java.util.Map<Character, Integer> counters = new java.util.HashMap<>();
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
@@ -127,23 +122,19 @@ public class Board {
                         char symbol = board[r][c];
                         counters.put(symbol, counters.getOrDefault(symbol, 0) + 1);
                         
-                        // Mark transformations
                         if (symbol == '\u263a') starTransform = true;
                         if (symbol == '\u263b') smileTransform = true;
                         
-                        // Remove the piece
                         board[r][c] = 0;
                     }
                 }
             }
 
-            // Apply effect only once per symbol type
             for (java.util.Map.Entry<Character, Integer> entry : counters.entrySet()) {
                 char symbol = entry.getKey();
                 applySymbolEffect(currentPlayer, opponentPlayer, symbol);
             }
 
-            // Apply transformations once after removing all pieces
             if (starTransform) {
                 transformElements('\u2620', '\u271a');
                 System.out.println("Transformation ☺: All ☠ became ✚");
@@ -155,7 +146,6 @@ public class Board {
                 smileTransform = false;
             }
 
-            // Gravity: for each column, make pieces "fall" down
             for (int c = 0; c < size; c++) {
                 int writeRow = size - 1;
                 for (int r = size - 1; r >= 0; r--) {
@@ -164,14 +154,12 @@ public class Board {
                         writeRow--;
                     }
                 }
-                // Fill the rest of the top with new random symbols
                 while (writeRow >= 0) {
                     board[writeRow][c] = symbols[random.nextInt(symbols.length)];
                     writeRow--;
                 }
             }
 
-            // After gravity + fill, the loop goes back and detects new trios (cascades)
         } while (true);
 
     }
@@ -192,12 +180,10 @@ public class Board {
                 System.out.println(currentPlayer.getName() + " gained +8 points for ✚");
                 break;
             case '\u263a':
-                // Transformation will be done in checkCombos, just add points here
                 currentPlayer.addPoints(3);
                 System.out.println(currentPlayer.getName() + " gained +3 points for ☺ (transformation)");
                 break;
             case '\u263b':
-                // Transformation will be done in checkCombos, just add points here
                 currentPlayer.addPoints(3);
                 System.out.println(currentPlayer.getName() + " gained +3 points for ☻ (transformation)");
                 break;
@@ -223,7 +209,6 @@ public class Board {
         }
     }
 
-    // Export board as string
     public String exportBoard() {
         StringBuilder sb = new StringBuilder();
         for (int r = 0; r < size; r++) {
@@ -234,7 +219,6 @@ public class Board {
         return sb.toString();
     }
 
-    // Restore board from string
     public void restoreBoard(String data) {
         int index = 0;
         for (int r = 0; r < size; r++) {

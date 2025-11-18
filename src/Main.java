@@ -52,7 +52,6 @@ public class Main {
 					}
 					Game game = new Game(player1Name, player2Name);
                     
-					// Ask for initial health
 					int initialHealth = 0;
 					while (initialHealth <= 0) {
 						System.out.println("---------What is the initial health for players? (recommended: 10-100):");
@@ -98,7 +97,6 @@ public class Main {
 						break;
 					}
 					loadedGame.play();
-					// Only ask to save if the game was not loaded (is a new game)
 					if (!loadedGame.isGameLoaded()) {
 						System.out.println("---------Save the game? (y/n)");
 						String saveOption2 = scanner.next().trim();
